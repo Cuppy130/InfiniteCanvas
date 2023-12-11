@@ -6,11 +6,10 @@ metaData = {
     Description: "My project I made 5/30/2023",
     Title: "Infinite Canvas",
     Short: "Inf Canvas",
-    Version: "3.41"
+    Version: "3.4"
 }
 
 const render = new Rendering(canvas)
-function getRandom(min, max) {return Math.random() * (max - min) + min;}
 
 let selectedColor = "red"
 
@@ -36,10 +35,6 @@ $(document).keydown(e=>{if(e.code=="ArrowRight"){
     let index = (colors.indexOf(selectedColor))+1
     index %= colors.length
     selectedColor = colors[index]
-    $("#colorbutton-left").css({'background-color': colors[index-1%colors.length]})
-    $("#colorbutton-right").css({'background-color': colors[index+1%colors.length]})
-    $("#colorbutton").css({'background': selectedColor})
-
 };if(e.code=="ArrowLeft"){
     let index = (colors.indexOf(selectedColor))-1
     index %= colors.length
@@ -47,18 +42,6 @@ $(document).keydown(e=>{if(e.code=="ArrowRight"){
         index = colors.length-1
     }
     selectedColor = colors[index]
-    $("#colorbutton").css({'background': selectedColor})
-    var left = index -1
-    if (left==-1) {
-        left= colors.length-1
-    }
-    var right = index +1
-    if (right==-1) {
-        right= colors.length-1
-    }
-    console.log(left%colors.length)
-    $("#colorbutton-left").css({'background-color': colors[left]})
-    $("#colorbutton-right").css({'background-color': colors[right]})
 }})
 
 //canvas
@@ -74,90 +57,44 @@ canvas[0].height = window.innerHeight
 const audioPlayer = new Audio('select-sound.mp3')
 
 var colors = ['white', 'grey', 'black', 'magenta', 'hotpink', 'purple', 'blue', 'turquoise', 'green', 'lime', 'yellow', 'orange', 'red']
-
-{
-    $("#colorbutton-left").click(event=>{
-        let index = (colors.indexOf(selectedColor))-1
-        index %= colors.length
-        if (index==-1){
-            index = colors.length-1
-        }
-        selectedColor = colors[index]
-        $("#colorbutton").css({'background': selectedColor})
-        var left = index -1
-        if (left==-1) {
-            left= colors.length-1
-        }
-        var right = index +1
-        if (right==-1) {
-            right= colors.length-1
-        }
-        console.log(left%colors.length)
-        $("#colorbutton-left").css({'background-color': colors[left]})
-        $("#colorbutton-right").css({'background-color': colors[right]})
+colors.forEach(color=>{
+    let btn = document.createElement('button');
+    btn.id = color
+    btn.className = 'color'
+    $("#palette")[0].appendChild(btn)
+    $("#"+color).mousedown(event=>{
+        selectedColor = $("#"+color)[0].id
+        audioPlayer.play()
+    }).css({
+        background: color
     })
-    $("#colorbutton-right").click(event=>{
-        let index = (colors.indexOf(selectedColor))+1
-        index %= colors.length
-        if (index==-1){
-            index = colors.length-1
-        }
-        selectedColor = colors[index]
-        $("#colorbutton").css({'background': selectedColor})
-        var left = index -1
-        if (left==-1) {
-            left= colors.length-1
-        }
-        var right = index +1
-        if (right==-1) {
-            right= right %colors.length
-        }
-        $("#colorbutton-left").css({'background-color': colors[left]})
-        $("#colorbutton-right").css({'background-color': colors[right]})
-    })
-}
+})
 
 
-/*let visual_displacement = {
-    x: 0,
-    y: 0
-}
 
-{
-    let start = [0, 0]
-    let end = [0, 0]
-    canvas[0].addEventListener('touchstart', (event)=>{
-        start[0] = event.changedTouches[0].screenX
-        start[1] = event.changedTouches[0].screenY
-        console.log(start)
-    })
-    canvas[0].addEventListener('touchmove', (event)=>{
-        end[0] = event.changedTouches[0].screenX
-        end[1] = event.changedTouches[0].screenY
-    })
-    canvas[0].addEventListener('touchend', event => {
-        pos.x += (end[0] - start[0]) * (scale / 50);
-        pos.y += (end[1] - start[1]) * (scale / 50);
-    })
-}
-*/
 var pos = {
     x: 0,
     y: 0
 }
-/*
-const queue = []
-function findInQueue(pixel){
-    queue.findIndex(({x, y, color}) => {if(pixel.x===x && pixel.y===y){return true}})
-}
-*/
+
+const queue = [
+
+]
+
 
 
 var cTime = new Date;
 let iTime = new Date - cTime;
 var scale = 25
 
+canvas[0].addEventListener('ontouchstart', event => {
+    console.log(event)
+})
 
+const drawsquare = (x, y, color) =>
+{
+    //is visible on screen checking
+}
 function easeInSine(x) {
     return 1 - Math.cos((x * Math.PI) / 2);
 }
@@ -257,7 +194,6 @@ function move(dir){
     }
 }
 
-
 function gameLoop()
 {
     ctx.clearRect(0,0,window.innerWidth,window.innerHeight);iTime = new Date - cTime;
@@ -266,7 +202,7 @@ function gameLoop()
     if(!showHelpMenu)
     {
         ctx.beginPath()
-        ctx.lineWidth = 2
+        ctx.lineWidth = 4
         ctx.strokeStyle = selectedColor
         ctx.rect(
             cursorHover[0]*scale+pos.x*scale,
@@ -278,15 +214,41 @@ function gameLoop()
         renderHelpMenu()
     }
 
-    zoomedSpeed=scale/2
-    velocity_speed = scale
+    zoomedSpeed=scale/2/50
+    velocity_speed = 1000/scale
     scale += keyboard.pressed("KeyE") ? zoomedSpeed : keyboard.pressed("KeyQ")*-1 * zoomedSpeed
     movement()
-}
 
-setInterval(() => {
-    gameLoop()
-}, 1000/60);
+    requestAnimationFrame(gameLoop)
+}
+gameLoop()
 
 $(window).keydown(e=>{if(e.code=='KeyF'){showHelpMenu=false}})
 
+$("#canvas").mousemove(e=>{
+    cursorActive = !showHelpMenu
+    cursorHoverTemp = [
+        Math.round((e.pageX-scale/2)/scale-pos.x), 
+        Math.round((e.pageY-scale/2)/scale-pos.y)
+    ]
+    if(cursorActive&&cursorDrawing&&cursorHover[0])
+    {
+        firebasePlaceRequest(cursorHover[0], cursorHover[1], selectedColor);
+    }
+    cursorHover = cursorHoverTemp
+}).mouseleave(()=>{
+    cursorActive = false
+}).click(e=>{
+    e.preventDefault()
+    if(cursorActive){
+        firebasePlaceRequest(cursorHover[0], cursorHover[1], selectedColor);
+    }
+}).mousedown(()=>{
+    cursorDrawing = true
+}).mouseup(()=>{
+    cursorDrawing = false
+})
+$(window).on('resize',()=>{
+    canvas[0].width = window.innerWidth
+    canvas[0].height = window.innerHeight
+})
