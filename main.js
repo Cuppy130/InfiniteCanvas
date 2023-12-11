@@ -31,18 +31,7 @@ $("#palette").css({
     cursorActive = false
 })
 
-$(document).keydown(e=>{if(e.code=="ArrowRight"){
-    let index = (colors.indexOf(selectedColor))+1
-    index %= colors.length
-    selectedColor = colors[index]
-};if(e.code=="ArrowLeft"){
-    let index = (colors.indexOf(selectedColor))-1
-    index %= colors.length
-    if (index==-1){
-        index = colors.length-1
-    }
-    selectedColor = colors[index]
-}})
+
 
 //canvas
 canvas.css({
@@ -54,21 +43,6 @@ canvas.css({
 canvas[0].width = window.innerWidth
 canvas[0].height = window.innerHeight
 
-const audioPlayer = new Audio('select-sound.mp3')
-
-var colors = ['white', 'grey', 'black', 'magenta', 'hotpink', 'purple', 'blue', 'turquoise', 'green', 'lime', 'yellow', 'orange', 'red']
-colors.forEach(color=>{
-    let btn = document.createElement('button');
-    btn.id = color
-    btn.className = 'color'
-    $("#palette")[0].appendChild(btn)
-    $("#"+color).mousedown(event=>{
-        selectedColor = $("#"+color)[0].id
-        audioPlayer.play()
-    }).css({
-        background: color
-    })
-})
 
 
 
@@ -77,30 +51,12 @@ var pos = {
     y: 0
 }
 
-const queue = [
 
-]
-
-
-
-var cTime = new Date;
-let iTime = new Date - cTime;
 var scale = 25
 
 canvas[0].addEventListener('ontouchstart', event => {
     console.log(event)
 })
-
-const drawsquare = (x, y, color) =>
-{
-    //is visible on screen checking
-}
-function easeInSine(x) {
-    return 1 - Math.cos((x * Math.PI) / 2);
-}
-function easeOutSine(x) {
-    return Math.sin((x * Math.PI) / 2);
-}
 
 const keyboard = new InputHandler;
 
@@ -196,7 +152,7 @@ function move(dir){
 
 function gameLoop()
 {
-    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);iTime = new Date - cTime;
+    ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
     //pixels.forEach(e => {drawsquare(e['x']+pos.x, e['y']+pos.y, e['color'])});
     render.drawPixels()
     if(!showHelpMenu)
@@ -224,31 +180,3 @@ function gameLoop()
 gameLoop()
 
 $(window).keydown(e=>{if(e.code=='KeyF'){showHelpMenu=false}})
-
-$("#canvas").mousemove(e=>{
-    cursorActive = !showHelpMenu
-    cursorHoverTemp = [
-        Math.round((e.pageX-scale/2)/scale-pos.x), 
-        Math.round((e.pageY-scale/2)/scale-pos.y)
-    ]
-    if(cursorActive&&cursorDrawing&&cursorHover[0])
-    {
-        firebasePlaceRequest(cursorHover[0], cursorHover[1], selectedColor);
-    }
-    cursorHover = cursorHoverTemp
-}).mouseleave(()=>{
-    cursorActive = false
-}).click(e=>{
-    e.preventDefault()
-    if(cursorActive){
-        firebasePlaceRequest(cursorHover[0], cursorHover[1], selectedColor);
-    }
-}).mousedown(()=>{
-    cursorDrawing = true
-}).mouseup(()=>{
-    cursorDrawing = false
-})
-$(window).on('resize',()=>{
-    canvas[0].width = window.innerWidth
-    canvas[0].height = window.innerHeight
-})

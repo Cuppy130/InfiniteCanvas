@@ -20,7 +20,6 @@ $("#canvas").mousemove(e=>{
     cursorDrawing = true
 }).mouseup(()=>{
     cursorDrawing = false
-    
 })
 $(window).on('resize',()=>{
     canvas[0].width = window.innerWidth

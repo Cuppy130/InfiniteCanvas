@@ -10,7 +10,7 @@ const app = firebase.initializeApp(firebaseConfig);
 
 let pixels = [];
 const pixelRef = firebase.database().ref('pixels')
-let t = new Date;
+
 pixelRef.on('child_added', snapshot =>{
     render.addPixel(snapshot.val())
 })
