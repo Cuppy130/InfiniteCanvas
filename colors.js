@@ -1,6 +1,6 @@
 const audioPlayer = new Audio('select-sound.mp3')
 
-var colors = ['white', 'grey', 'black', 'magenta', 'hotpink', 'purple', 'blue', 'turquoise', 'green', 'lime', 'yellow', 'orange', 'red']
+var colors = ['white', 'grey', 'black', 'hotpink', 'purple', 'blue', 'green', 'lime', 'yellow', 'orange', 'red']
 colors.forEach(color=>{
     let btn = document.createElement('button');
     btn.id = color
