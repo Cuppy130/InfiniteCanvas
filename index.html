@@ -4,22 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1" /-->
     <title>Infinite Canvas</title>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.4.0/gl-matrix.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="rendering.js"></script>
     <script src="keyboard.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="firebase.js"></script>
 </head>
 <div id="palette">
-    <button id="colorbutton-left"><img src="Arrow-Left.png" alt=""></button>
-    <button id="colorbutton"></button>
-    <button id="colorbutton-right"><img src="Arrow-Right.png" alt=""></button>
     <style>
         * {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -32,7 +28,7 @@
             bottom: 0px;
             position: fixed;
             display: flex;
-            justify-content: right;
+            justify-content: center;
         }
         .color {
             margin-right: 10px;
@@ -55,35 +51,6 @@
             justify-content: center;
         }
 
-        #colorbutton {
-            margin: 0px;
-            border: 0px solid rgb(0, 0, 0);
-            width: 20px;
-            height: 20px;
-            background-color: red;
-        }
-        #colorbutton-left {
-            margin: 0px;
-            border: 0px solid black;
-            width: 20px;
-            height: 20px;
-            background-color: rgb(255, 255, 255);
-        }
-        #colorbutton-right {
-            margin: 0px;
-            border: 0px solid black;
-            width: 20px;
-            height: 20px;
-            background-color: rgb(255, 255, 255);
-        }
-
-        #colorbutton-left img {
-            height: 20px;
-        }
-        #colorbutton-right img {
-            height: 20px;
-        }
-
         #canvas {
             width: 100vw;
             height: 100vh;
@@ -100,5 +67,4 @@
 </div>
 <canvas id="canvas"></canvas>
 <script src="main.js"></script>
-<script src="drawing.js"></script>
 </html>
