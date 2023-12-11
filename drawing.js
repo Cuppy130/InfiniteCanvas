@@ -1,8 +1,8 @@
 $("#canvas").mousemove(e=>{
     cursorActive = !showHelpMenu
     cursorHoverTemp = [
-        Math.round((e.pageX-scale/2)/scale-pos.x), 
-        Math.round((e.pageY-scale/2)/scale-pos.y)
+        Math.floor((e.pageX)/scale-pos.x), 
+        Math.floor((e.pageY)/scale-pos.y)
     ]
     if(cursorActive&&cursorDrawing&&cursorHover[0])
     {
