@@ -2,7 +2,7 @@ const canvas = $("#canvas")
 const ctx = canvas[0].getContext('2d')
 let cursorActive = false;
 metaData = {
-    Author: "Zest! @ PYgames",
+    Author: "Pyrare! @ https://pygames.7m.pl/",
     Description: "My project I made 5/30/2023",
     Title: "Infinite Canvas",
     Short: "Inf Canvas",
