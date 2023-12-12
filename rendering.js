@@ -55,7 +55,7 @@ class Rendering {
                 width++;
                 x++;
                 let color = pixels[`${x}x${y}`].color
-                let x2= x-width
+                let x2= x-width+1
                 recursion(x, y, pixels, width)
                 arr.push({x:x2, y, color, width, height})
             } else {
