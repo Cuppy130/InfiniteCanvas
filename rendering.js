@@ -54,10 +54,13 @@ class Rendering {
             if(pixels[`${x}x${y}`].color == pixels[`${x+1}x${y}`].color){
                 width++;
                 x++;
+                let color = pixels[`${x}x${y}`].color
+                let x2= x-width
                 recursion(x, y, pixels, width)
+                arr.push({x:x2, y, color, width, height})
             } else {
                 let color = pixels[`${x}x${y}`].color
-                let x2= x-width-1
+                let x2= x-width+1
                 arr.push({x:x2, y, color, width, height})
                 recursion(x+1, y, pixels)
             }
