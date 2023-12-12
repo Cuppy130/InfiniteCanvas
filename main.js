@@ -174,9 +174,10 @@ function gameLoop()
     velocity_speed = 1000/scale
     scale += keyboard.pressed("KeyE") ? zoomedSpeed : keyboard.pressed("KeyQ")*-1 * zoomedSpeed
     movement()
-
-    requestAnimationFrame(gameLoop)
 }
-gameLoop()
+
+setInterval(() => {
+    gameLoop();
+}, 1000/60);
 
 $(window).keydown(e=>{if(e.code=='KeyF'){showHelpMenu=false}})

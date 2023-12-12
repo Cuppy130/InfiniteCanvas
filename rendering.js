@@ -7,6 +7,11 @@ class Rendering {
         this.width = window.innerWidth;
         this.height = window.innerHeight;
     }
+    main() {
+        for (let x = 0; x < 200; i++) {
+            this.pixels[`${100}x${x}`] = {x: 101, y: i-100, color: violet}
+        }
+    }
     addPixel(pixel){
         this.pixels[`${pixel.x}x${pixel.y}`] = pixel;
     }
@@ -14,7 +19,7 @@ class Rendering {
         this.pixels.splice(this.pixels.indexOf(pixel), 1);
     }
     updatePixel(pixel){
-        this.pixels[this.pixels.findIndex(({x, y, color}) => x===pixel.x && y===pixel.y)].color = pixel.color
+        this.pixels[`${pixel.x}x${pixel.y}`] = pixel;
     }
     drawPixels(){
         //const ctx = this.canvasElement[0].getContext('2d');
@@ -58,8 +63,8 @@ class Rendering {
             }
             return arr
         }
-        for(let i=0; i<=200; i++){
-            recursion(Math.floor(-100), Math.floor(i-100), this.pixels)
+        for(let i=0; i<=400; i++){
+            recursion(Math.floor(-100), Math.floor(i-101), this.pixels)
         }
         
         this.pixels2 = arr
