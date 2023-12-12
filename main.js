@@ -6,7 +6,7 @@ metaData = {
     Description: "My project I made 5/30/2023",
     Title: "Infinite Canvas",
     Short: "Inf Canvas",
-    Version: "3.4"
+    Version: "3.5"
 }
 
 const render = new Rendering(canvas)
@@ -116,6 +116,7 @@ function renderHelpMenu()
     ctx.fillRect(0, 0, 200, 125)
     ctx.fillStyle = 'white'
     ctx.font = '20px arial'
+    ctx.fillText(metaData.Title, 5, 40)
     ctx.fillText("[Q,E] Zoom", 5, 20+40)
     ctx.fillText("[W,A,S,D] Movement", 5, 20+60)
     ctx.fillText("[LMB] Place", 5, 20+80)
@@ -153,7 +154,6 @@ function move(dir){
 function gameLoop()
 {
     ctx.clearRect(0,0,window.innerWidth,window.innerHeight);
-    //pixels.forEach(e => {drawsquare(e['x']+pos.x, e['y']+pos.y, e['color'])});
     render.drawPixels()
     if(!showHelpMenu)
     {

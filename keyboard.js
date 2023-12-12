@@ -1,3 +1,4 @@
+//totally not stolen from a youtube video
 class InputHandler {
     constructor(){
         this.keys = [];
