@@ -6,10 +6,11 @@ class Rendering {
         this.scale = 1;
         this.width = window.innerWidth;
         this.height = window.innerHeight;
+        this.main()
     }
     main() {
-        for (let x = 0; x < 200; i++) {
-            this.pixels[`${100}x${x}`] = {x: 101, y: i-100, color: violet}
+        for (let i = 0; i < 200; i++) {
+            this.addPixel({x:101, y: i-100, color:'violet'})
         }
     }
     addPixel(pixel){
@@ -19,7 +20,7 @@ class Rendering {
         this.pixels.splice(this.pixels.indexOf(pixel), 1);
     }
     updatePixel(pixel){
-        this.pixels[`${pixel.x}x${pixel.y}`] = pixel;
+        this.pixels[`${pixel.x}x${pixel.y}`].color = pixel.color;
     }
     drawPixels(){
         //const ctx = this.canvasElement[0].getContext('2d');
@@ -46,18 +47,16 @@ class Rendering {
         
         let arr = []
         
-        function recursion(x, y, pixels, width = 1){
-            let height = 1;
-            if(!pixels[`${x+1}x${y}`]){
+        function recursion(x, y, pixels, width = 1, height = 1){
+            if(!pixels[`${x+1}x${y}`] || !pixels[`${x}x${y}`]){
                 return arr
-            }
-            if(pixels[`${x}x${y}`].color == pixels[`${x+1}x${y}`].color){
+            } else if(pixels[`${x}x${y}`].color == pixels[`${x+1}x${y}`].color){
                 width++;
                 x++;
                 let color = pixels[`${x}x${y}`].color
                 let x2= x-width+1
-                recursion(x, y, pixels, width)
                 arr.push({x:x2, y, color, width, height})
+                recursion(x, y, pixels)
             } else {
                 let color = pixels[`${x}x${y}`].color
                 let x2= x-width+1
@@ -66,8 +65,8 @@ class Rendering {
             }
             return arr
         }
-        for(let i=0; i<=400; i++){
-            recursion(Math.floor(-100), Math.floor(i-101), this.pixels)
+        for(let i=0; i<=Math.ceil(window.innerHeight/scale); i++){
+            recursion(Math.max(Math.floor(-Math.floor(pos.x))-1, -100), Math.floor(i-Math.round(pos.y))-1, this.pixels)
         }
         
         this.pixels2 = arr
