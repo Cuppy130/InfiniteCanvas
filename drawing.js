@@ -1,6 +1,6 @@
 $("#canvas").mousemove(e=>{
     cursorActive = !showHelpMenu
-    cursorHoverTemp = [
+    cursorHover = [
         Math.floor((e.pageX)/scale-pos.x), 
         Math.floor((e.pageY)/scale-pos.y)
     ]
@@ -8,7 +8,6 @@ $("#canvas").mousemove(e=>{
     {
         firebasePlaceRequest(cursorHover[0], cursorHover[1], selectedColor);
     }
-    cursorHover = cursorHoverTemp
 }).mouseleave(()=>{
     cursorActive = false
 }).click(e=>{

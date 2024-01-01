@@ -10,7 +10,7 @@ class Rendering {
     }
     main() {
         for (let i = 0; i < 200; i++) {
-            this.addPixel({x:101, y: i-100, color:'violet'})
+            this.addPixel({x:513, y: i-100, color:'violet'})
         }
     }
     addPixel(pixel){
@@ -23,8 +23,6 @@ class Rendering {
         this.pixels[`${pixel.x}x${pixel.y}`].color = pixel.color;
     }
     drawPixels(){
-        //const ctx = this.canvasElement[0].getContext('2d');
-        
         const ctx = this.canvasElement[0].getContext('2d');
         /*this.pixels.forEach(pixel=>{
             let posx = pixel.x*scale+pos.x*scale;
@@ -48,26 +46,28 @@ class Rendering {
         let arr = []
         
         function recursion(x, y, pixels, width = 1, height = 1){
-            if(!pixels[`${x+1}x${y}`] || !pixels[`${x}x${y}`]){
-                return arr
-            } else if(pixels[`${x}x${y}`].color == pixels[`${x+1}x${y}`].color){
+            if((!pixels[`${x+1}x${y}`] || !pixels[`${x}x${y}`]) || (pixels[`${x}x${y}`] == null && pixels[`${x+1}x${y}`] == null)){
+                return;
+            } 
+            let recurse = pixels[`${x}x${y}`].color == pixels[`${x+1}x${y}`].color;
+            if(recurse){
                 width++;
                 x++;
+                recursion(x, y, pixels, width)
                 let color = pixels[`${x}x${y}`].color
                 let x2= x-width+1
                 arr.push({x:x2, y, color, width, height})
-                recursion(x, y, pixels)
             } else {
                 let color = pixels[`${x}x${y}`].color
                 let x2= x-width+1
                 arr.push({x:x2, y, color, width, height})
                 recursion(x+1, y, pixels)
             }
-            return arr
         }
         for(let i=0; i<=Math.ceil(window.innerHeight/scale); i++){
-            recursion(Math.max(Math.floor(-Math.floor(pos.x))-1, -100), Math.floor(i-Math.round(pos.y))-1, this.pixels)
+            recursion(Math.max(Math.floor(-Math.floor(pos.x))-1, -256), Math.floor(i-Math.round(pos.y))-1, this.pixels)
         }
+        
         
         this.pixels2 = arr
         this.pixels2.forEach(pixel=>{
