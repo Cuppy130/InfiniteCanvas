@@ -9,8 +9,10 @@ class Rendering {
         this.main()
     }
     main() {
-        for (let i = 0; i < 200; i++) {
-            this.addPixel({x:513, y: i-100, color:'violet'})
+        for (let x = 0; x < 512; x++) {
+            for (let y = 0; y < 512; y++) {
+                this.addPixel({x: x-256, y: y-256, color:'white'})
+            }
         }
     }
     addPixel(pixel){
@@ -64,8 +66,10 @@ class Rendering {
                 recursion(x+1, y, pixels)
             }
         }
-        for(let i=0; i<=Math.ceil(window.innerHeight/scale); i++){
-            recursion(Math.max(Math.floor(-Math.floor(pos.x))-1, -256), Math.floor(i-Math.round(pos.y))-1, this.pixels)
+        for(let i=0; i<=512; i++){
+            if(scale*i<innerHeight){
+                recursion(Math.max(Math.floor(-Math.floor(pos.x))-1, -256), Math.floor(i-Math.round(pos.y))-1, this.pixels)
+            }
         }
         
         
@@ -75,8 +79,10 @@ class Rendering {
             let posy = pixel.y*scale+pos.y*scale;
             let wid = scale * pixel.width;
             let hei = scale * pixel.height + 1;
-            ctx.fillStyle = pixel.color
-            ctx.fillRect(posx, posy, wid, hei)
+            if(posx<innerWidth){
+                ctx.fillStyle = pixel.color
+                ctx.fillRect(posx, posy, wid, hei)
+            }
         })
     }
     
