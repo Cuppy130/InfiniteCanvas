@@ -52,13 +52,25 @@ class Rendering {
                 return;
             } 
             let recurse = pixels[`${x}x${y}`].color == pixels[`${x+1}x${y}`].color;
-            if(recurse){
+            
+            /*if(recurse){
                 width++;
                 x++;
                 recursion(x, y, pixels, width)
                 let color = pixels[`${x}x${y}`].color
                 let x2= x-width+1
+                //arr.push({x:x2, y, color, width, height})
+            } else {
+                let color = pixels[`${x}x${y}`].color
+                let x2= x-width+1
                 arr.push({x:x2, y, color, width, height})
+                recursion(x+1, y, pixels)
+            }*/
+
+            if(recurse){
+                width++;
+                x++;
+                recursion(x, y, pixels, width, height)
             } else {
                 let color = pixels[`${x}x${y}`].color
                 let x2= x-width+1
@@ -79,7 +91,7 @@ class Rendering {
             let posy = pixel.y*scale+pos.y*scale;
             let wid = scale * pixel.width;
             let hei = scale * pixel.height + 1;
-            if(posx<innerWidth){
+            if(posx>0&&posx<window.innerWidth&&posy>0&&posy<window.innerHeight){
                 ctx.fillStyle = pixel.color
                 ctx.fillRect(posx, posy, wid, hei)
             }
