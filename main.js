@@ -31,8 +31,6 @@ $("#palette").css({
     cursorActive = false
 })
 
-
-
 //canvas
 canvas.css({
     "background": "#cfcfcf",
